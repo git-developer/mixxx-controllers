@@ -5,7 +5,7 @@ Custom controller mappings for [Mixxx](https://mixxx.org/).
 ## Contents
 ### Behringer DDM4000
 
-![DDM4000 with overlay](manual/source/_static/controllers/behringer_ddm4000_mixer_with_overlay.svg "DDM4000 with overlay")
+![DDM4000 with overlay](manual/source/_static/controllers/behringer_ddm4000_with_overlay.svg "DDM4000 with overlay")
 
 This custom mapping allows to control
 * Volume and Equalizer controls for 2 Decks
