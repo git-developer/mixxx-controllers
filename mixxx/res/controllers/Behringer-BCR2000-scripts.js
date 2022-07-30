@@ -62,9 +62,9 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                 midi: {
                     effectFocusButton: [cc, p.buttonRow1[0]],
                     enableButtons: {
-                        1: [cc, p.pushEncoderGroup1[1].button],
-                        2: [cc, p.pushEncoderGroup1[2].button],
-                        3: [cc, p.pushEncoderGroup1[3].button],
+                        1: [cc, p.buttonRow2[1]],
+                        2: [cc, p.buttonRow2[2]],
+                        3: [cc, p.buttonRow2[3]],
                     },
                     knobs: {
                         1: [cc, p.pushEncoderGroup1[1].encoder],
@@ -78,18 +78,18 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                 feedback: true,
                 unitNumbers: [2],
                 midi: {
-                    effectFocusButton: [cc, p.buttonRow1[4]],
+                    effectFocusButton: [cc, p.buttonRow1[7]],
                     enableButtons: {
-                        1: [cc, p.pushEncoderGroup1[5].button],
-                        2: [cc, p.pushEncoderGroup1[6].button],
-                        3: [cc, p.pushEncoderGroup1[7].button],
+                        1: [cc, p.buttonRow2[4]],
+                        2: [cc, p.buttonRow2[5]],
+                        3: [cc, p.buttonRow2[6]],
                     },
                     knobs: {
-                        1: [cc, p.pushEncoderGroup1[5].encoder],
-                        2: [cc, p.pushEncoderGroup1[6].encoder],
-                        3: [cc, p.pushEncoderGroup1[7].encoder],
+                        1: [cc, p.pushEncoderGroup1[4].encoder],
+                        2: [cc, p.pushEncoderGroup1[5].encoder],
+                        3: [cc, p.pushEncoderGroup1[6].encoder],
                     },
-                    dryWetKnob: [cc, p.pushEncoderGroup1[4].encoder],
+                    dryWetKnob: [cc, p.pushEncoderGroup1[7].encoder],
                 }
             }],
             containers: [{
@@ -99,14 +99,14 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                 },
                 components: [
                     {options: {midi: [cc, p.buttonRow2[0]]}},
-                    {options: {midi: [cc, p.buttonRow2[4]]}},
+                    {options: {midi: [cc, p.buttonRow2[7]]}},
                 ],
             },
             {
                 defaultDefinition: {type: c.Button, options: {inKey: "enabled", type: c.Button.prototype.types.push}},
                 components: [
                     {options: {midi: [cc, p.pushEncoderGroup1[0].button], group: "[EffectRack1_EffectUnit1]"}},
-                    {options: {midi: [cc, p.pushEncoderGroup1[4].button], group: "[EffectRack1_EffectUnit2]"}},
+                    {options: {midi: [cc, p.pushEncoderGroup1[7].button], group: "[EffectRack1_EffectUnit2]"}},
                 ]
             },
             {
@@ -116,7 +116,7 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[1]], key: "parameter2"}},
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[1]], key: "parameter3"}},
                     {type: c.Button, options: {midi: [cc, p.buttonRow1[1]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[1]], key: "button_parameter2"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[1].button], key: "button_parameter2"}},
                 ],
             },
             {
@@ -126,7 +126,7 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[2]], key: "parameter2"}},
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[2]], key: "parameter3"}},
                     {type: c.Button, options: {midi: [cc, p.buttonRow1[2]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[2]], key: "button_parameter2"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[2].button], key: "button_parameter2"}},
                 ],
             },
             {
@@ -136,37 +136,37 @@ var BCR2000 = new behringer.extension.GenericMidiController({
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[3]], key: "parameter2"}},
                     {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[3]], key: "parameter3"}},
                     {type: c.Button, options: {midi: [cc, p.buttonRow1[3]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[3]], key: "button_parameter2"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[3].button], key: "button_parameter2"}},
                 ],
             },
             {
                 defaultDefinition: {options: {group: "[EffectRack1_EffectUnit2_Effect1]"}},
                 components: [
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[5]], key: "parameter1"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[5]], key: "parameter2"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[5]], key: "parameter3"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow1[5]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[5]], key: "button_parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[4]], key: "parameter1"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[4]], key: "parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[4]], key: "parameter3"}},
+                    {type: c.Button, options: {midi: [cc, p.buttonRow1[4]], key: "button_parameter1"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[4].button], key: "button_parameter2"}},
                 ],
             },
             {
                 defaultDefinition: {options: {group: "[EffectRack1_EffectUnit2_Effect2]"}},
                 components: [
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[6]], key: "parameter1"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[6]], key: "parameter2"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[6]], key: "parameter3"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow1[6]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[6]], key: "button_parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[5]], key: "parameter1"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[5]], key: "parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[5]], key: "parameter3"}},
+                    {type: c.Button, options: {midi: [cc, p.buttonRow1[5]], key: "button_parameter1"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[5].button], key: "button_parameter2"}},
                 ],
             },
             {
                 defaultDefinition: {options: {group: "[EffectRack1_EffectUnit2_Effect3]"}},
                 components: [
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[7]], key: "parameter1"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[7]], key: "parameter2"}},
-                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[7]], key: "parameter3"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow1[7]], key: "button_parameter1"}},
-                    {type: c.Button, options: {midi: [cc, p.buttonRow2[7]], key: "button_parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow1[6]], key: "parameter1"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow2[6]], key: "parameter2"}},
+                    {type: e.ParameterComponent, options: {midi: [cc, p.encoderRow3[6]], key: "parameter3"}},
+                    {type: c.Button, options: {midi: [cc, p.buttonRow1[6]], key: "button_parameter1"}},
+                    {type: c.Button, options: {midi: [cc, p.pushEncoderGroup1[6].button], key: "button_parameter2"}},
                 ],
             },
             ],
