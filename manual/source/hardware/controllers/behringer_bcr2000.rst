@@ -99,7 +99,10 @@ The controls are divided into the following parts:
 |                  |               | (:hwlabel:`TYPE`)  |   (output) signal of the effect unit.                                       |
 |                  +---------------+--------------------+                                                                             |
 |                  | Effect Unit 2 | Encoder 8          |                                                                             |
-|                  |               |                    |                                                                             |
++                  +---------------+--------------------+-----------------------------------------------------------------------------+
+|                  | Effect Unit 1 | Button 1           | - Press: Toggles the effect unit.                                           |
+|                  +---------------+--------------------+                                                                             |
+|                  | Effect Unit 2 | Button 8           |                                                                             |
 +                  +---------------+--------------------+-----------------------------------------------------------------------------+
 |                  | Effect Unit 1 | Encoder 2          | - Rotate: Controls the meta knob of effect 1.                               |
 |                  |               | (:hwlabel:`CH`)    | - Press: Toggles parameter button 2 of effect 1.                            |
