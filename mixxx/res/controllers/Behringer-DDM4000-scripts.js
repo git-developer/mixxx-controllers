@@ -3,10 +3,10 @@
  */
 (function(global) {
 
-    var THROTTLE_DELAY = 40;
-    var DEFAULT_LONGPRESS_DURATION = 500;
-    var DEFAULT_BLINK_DURATION = 425;
-    var DEFAULT_DECK_STATE = {
+    const THROTTLE_DELAY = 40;
+    const DEFAULT_LONGPRESS_DURATION = 500;
+    const DEFAULT_BLINK_DURATION = 425;
+    const DEFAULT_DECK_STATE = {
         "beatloop_size": 16,
         "beatjump_size": 1,
         "vinylcontrol_enabled": 1,
@@ -15,11 +15,11 @@
     };
 
     /* Shortcut variables */
-    var c    = components;
-    var e    = global.behringer.extension;
-    var cc   = 0xB0;
-    var note = 0x90;
-    var toggle = c.Button.prototype.types.toggle;
+    const c    = components;
+    const e    = global.behringer.extension;
+    const cc   = 0xB0;
+    const note = 0x90;
+    const toggle = c.Button.prototype.types.toggle;
 
     /**
      * Contains functions to print a message to the log.
@@ -28,7 +28,7 @@
      * @param {string} message Message
      * @private
      */
-    var log = {
+    const log = {
         debug: function(message) {
             if (this.debug) {
                 print("[DEBUG] " + message);
@@ -41,7 +41,7 @@
             print("[ERROR] " + message);
         },
     };
-    var Blinker = function(target, blinkDuration, outValueScale) {
+    const Blinker = function(target, blinkDuration, outValueScale) {
         this.target = target;
         this.outValueScale = outValueScale || c.Component.prototype.outValueScale;
 
@@ -58,7 +58,7 @@
         },
     };
 
-    var OnTrackLoadButton = function(options) {
+    const OnTrackLoadButton = function(options) {
         options = options || {};
         options.outKey = options.outKey || options.key || "track_loaded";
         options.setValues = options.setValues || {};
@@ -66,11 +66,11 @@
     };
     OnTrackLoadButton.prototype = e.deriveFrom(c.Button, {
         output: function(_value, _group, _control) {
-            var action = function() {
+            const action = function() {
                 Object.keys(this.setValues).forEach(function(key) {
-                    var group;
-                    var element;
-                    var data = key.split(",");
+                    let group;
+                    let element;
+                    const data = key.split(",");
                     if (data.length > 1) {
                         group = data[0].replace("${group}", this.group);
                         element = data[1];
@@ -86,7 +86,7 @@
         },
     });
 
-    var KeyButton = function(options) {
+    const KeyButton = function(options) {
         options = options || {};
         options.key = options.key || "keylock";
         options.longPressTimeout = options.longPressTimeout || DEFAULT_LONGPRESS_DURATION;
@@ -101,9 +101,9 @@
         },
     });
 
-    var createEffectAssignmentButtons = function(options) {
+    const createEffectAssignmentButtons = function(options) {
         options = options || {};
-        var midiAddresses = options.midiAddresses;
+        let midiAddresses = options.midiAddresses;
         if (!Array.isArray(midiAddresses) || midiAddresses.length === 0) {
             log.error("At least 1 MIDI address is required to create an EffectAssignmentButton.");
             midiAddresses = [];
@@ -114,7 +114,7 @@
         });
     };
 
-    var EffectAssignmentToggleButton = function(options) {
+    const EffectAssignmentToggleButton = function(options) {
         options = options || {};
         this.buttons = createEffectAssignmentButtons(options);
         c.Button.call(this, options);
@@ -122,7 +122,7 @@
     EffectAssignmentToggleButton.prototype = e.deriveFrom(c.Button, {
         input: function(channel, control, value, status, _group) {
             if (this.isPress(channel, control, value, status)) {
-                var states = 0;
+                let states = 0;
                 this.buttons.forEach(function(b) { states = (states << 1) | b.inGetValue(); });
                 states++;
                 this.buttons.forEach(function(b, i) { b.inSetValue((states >> i) & 1); });
@@ -130,7 +130,7 @@
         }
     });
 
-    var EffectAssignmentLongPressButton = function(options) {
+    const EffectAssignmentLongPressButton = function(options) {
         options = options || {};
         options.longPressTimeout = options.longPressTimeout || DEFAULT_LONGPRESS_DURATION;
         this.buttons = createEffectAssignmentButtons(options);
@@ -159,7 +159,7 @@
      *                                          in addition to the echo effect
      * @public
      */
-    var EchoOutButton = function(options) {
+    const EchoOutButton = function(options) {
         options = options || {};
         if (options.type === undefined) { // do not use '||' to allow 0
             options.type = c.Button.prototype.types.toggle;
@@ -177,10 +177,10 @@
     };
     EchoOutButton.prototype = e.deriveFrom(c.Button, {
         enumerateChannels: function() {
-            var groupFactory = function(type, countControl, index) {
+            const groupFactory = function(type, countControl, index) {
                 index = index || function(i) { return i+1; };
-                var count = engine.getValue("[Master]", countControl);
-                return _.range(count).map(function(i) { return "[" + type + index.call(null, i) + "]"; });
+                const count = engine.getValue("[App]", countControl);
+                return [...Array(count).keys()].map(function(i) { return "[" + type + index.call(null, i) + "]"; });
             };
             return [
                 ["Channel", "num_decks"],
@@ -197,7 +197,7 @@
             }
         },
         enableEffect: function() {
-            var delay = this.prepareEffect(this.group);
+            const delay = this.prepareEffect(this.group);
             if (delay) {
                 this.enableEffectControls(1);
                 this.forAffectedChannels(function(channels, _channelVolumes) {
@@ -225,16 +225,16 @@
          * @private
          */
         prepareEffect: function(effectGroup) {
-            var groups = script.individualEffectRegEx.exec(effectGroup);
+            const groups = script.individualEffectRegEx.exec(effectGroup);
             if (!Array.isArray(groups) || groups.length < 1) {
                 log.error("Effect unit cannot be derived from effect group " + effectGroup);
                 return;
             }
-            var unitGroup = "[EffectRack1_EffectUnit" + groups[1] + "]";
-            var target = this.affectedChannelVolumes;
+            const unitGroup = "[EffectRack1_EffectUnit" + groups[1] + "]";
+            const target = this.affectedChannelVolumes;
             this.allChannels.forEach(function(channel) {
                 if (engine.getValue(unitGroup, "group_" + channel + "_enable")) {
-                    var volume = engine.getValue(channel, "volume");
+                    const volume = engine.getValue(channel, "volume");
                     if (volume) {
                         if (engine.getValue(channel, "play_indicator")) {
                             target[channel] = volume;
@@ -247,13 +247,13 @@
             return this.calculateEchoDelay();
         },
         calculateEchoDelay: function() {
-            var delay = null;
+            let delay = null;
             this.forAffectedChannels(function(channels, _channelVolumes) {
                 channels.forEach(function(channel) {
                     if (!delay) {
-                        var bpm = engine.getValue(channel, "bpm");
+                        const bpm = engine.getValue(channel, "bpm");
                         if (bpm) {
-                            var beats = 60.0 / bpm;
+                            const beats = 60.0 / bpm;
                             delay = 1000.0 * beats * this.getEchoDelay(this.group);
                         }
                     }
@@ -271,11 +271,11 @@
          * @see https://github.com/mixxxdj/mixxx/blob/2.3/src/effects/builtin/echoeffect.cpp#L152
          */
         getEchoDelay: function(group) {
-            var quantize = engine.getValue(group, "button_parameter1");
-            var triplet = engine.getValue(group, "button_parameter2");
-            var delay = engine.getValue(group, "parameter1"); // range: [0, 2]
-            var minDelay = 1/8.0;
-            var precision = 4.0;
+            const quantize = engine.getValue(group, "button_parameter1");
+            const triplet = engine.getValue(group, "button_parameter2");
+            let delay = engine.getValue(group, "parameter1"); // range: [0, 2]
+            const minDelay = 1/8.0;
+            const precision = 4.0;
             if (quantize) {
                 delay = Math.max(Math.round(delay * precision) / precision, minDelay);
                 if (triplet) {
@@ -285,7 +285,7 @@
             return delay;
         },
         mute: function(channels, delay) {
-            var muteAction = function() {
+            const muteAction = function() {
                 channels.forEach(function(channel) { script.triggerControl(channel, "volume_set_zero"); }, this);
             };
             this.stopTimer(); // timer may be pending
@@ -306,19 +306,19 @@
             }
         },
         forAffectedChannels: function(action) {
-            var channels = Object.keys(this.affectedChannelVolumes);
+            const channels = Object.keys(this.affectedChannelVolumes);
             if (channels.length) {
                 action.call(this, channels, this.affectedChannelVolumes);
             }
         },
     });
 
-    var CrossfaderUnit = function(options) {
-        var unitOptions = options || {};
+    const CrossfaderUnit = function(options) {
+        const unitOptions = options || {};
         unitOptions.group = unitOptions.group || "[Master]";
         c.ComponentContainer.call(this, unitOptions);
 
-        var Crossfader = function(options) {
+        const Crossfader = function(options) {
             options = options || {};
             options.inKey = options.inKey || options.key || "crossfader";
             options.group = options.group || unitOptions.group;
@@ -334,9 +334,9 @@
                 engine.setValue("[Master]", "crossfader_set_default", 1);
             },
         });
-        var crossfader = new Crossfader(options.crossfader);
+        const crossfader = new Crossfader(options.crossfader);
 
-        var CrossfaderToggleButton = function(options) {
+        const CrossfaderToggleButton = function(options) {
             options = options || {};
             if (options.type === undefined) {
                 options.type = toggle;
@@ -374,7 +374,7 @@
      * @param {number} options Options object
      * @public
      */
-    var CrossfaderReverseTapButton = function(options) {
+    const CrossfaderReverseTapButton = function(options) {
         options = options || {};
         options.inKey = options.inKey || "xFaderReverse";
         c.Button.call(this, options);
@@ -386,7 +386,7 @@
         },
     });
 
-    var CrossfaderAssignLED = function(options) {
+    const CrossfaderAssignLED = function(options) {
         options = options || {};
         options.outKey = options.outKey || "orientation";
         e.CustomButton.call(this, options);
@@ -398,15 +398,15 @@
             right: 2
         }
     });
-    var left = CrossfaderAssignLED.prototype.position.left;
-    var center = CrossfaderAssignLED.prototype.position.center;
-    var right = CrossfaderAssignLED.prototype.position.right;
+    const left = CrossfaderAssignLED.prototype.position.left;
+    const center = CrossfaderAssignLED.prototype.position.center;
+    const right = CrossfaderAssignLED.prototype.position.right;
 
-    var SamplerBank = function(bankOptions) {
+    const SamplerBank = function(bankOptions) {
         c.ComponentContainer.call(this);
-        var bank = this;
+        const bank = this;
 
-        var PlayButton = function(options) {
+        const PlayButton = function(options) {
             options = options || {};
             options.inKey = options.inKey || "cue_gotoandplay";
             options.outKey = options.outKey || "track_loaded";
@@ -428,7 +428,7 @@
             group: bankOptions.group,
         });
 
-        var PlayIndicatorLED = function(options) {
+        const PlayIndicatorLED = function(options) {
             options = options || {};
             options.outKey = options.outKey || "play_indicator";
             this.blinker = new Blinker(this, options.blinkDuration);
@@ -448,7 +448,7 @@
             blinkDuration: DEFAULT_BLINK_DURATION,
         });
 
-        var ReverseMode = function(options) {
+        const ReverseMode = function(options) {
             options = options || {};
             options.key = options.key || "reverse";
             c.Button.call(this, options);
@@ -456,7 +456,7 @@
         ReverseMode.prototype = e.deriveFrom(c.Button);
         this.reverseMode = new ReverseMode({midi: bankOptions.reverse, group: bankOptions.group});
 
-        var LoopMode = function(options) {
+        const LoopMode = function(options) {
             options = options || {};
             options.key = options.inKey || "beatloop_activate";
             c.Button.call(this, options);
@@ -464,11 +464,11 @@
         };
         LoopMode.prototype = e.deriveFrom(c.Button, {
             outValueScale: function(value) {
-                var button = c.Button.prototype;
+                const button = c.Button.prototype;
                 bank.playButton.type = value ? button.types.toggle : button.types.push;
                 if (!value) {
-                    var beatloopSize = engine.getValue(this.group, "beatloop_size");
-                    var key = "beatloop_" + beatloopSize;
+                    const beatloopSize = engine.getValue(this.group, "beatloop_size");
+                    const key = "beatloop_" + beatloopSize;
                     engine.setValue(this.group, key, 0);
                 }
                 return button.outValueScale(value);
@@ -476,7 +476,7 @@
         });
         this.loopMode = new LoopMode({midi: bankOptions.loop, group: bankOptions.group});
 
-        var ModeButton = function(options) {
+        const ModeButton = function(options) {
             options = options || {};
             options.key = options.key || "mode";
             options.longPressTimeout = options.longPressTimeout || DEFAULT_LONGPRESS_DURATION;
@@ -502,7 +502,7 @@
     };
     SamplerBank.prototype = e.deriveFrom(c.ComponentContainer);
 
-    var DDM4000 = new e.GenericMidiController({
+    const DDM4000 = new e.GenericMidiController({
         configurationProvider: function() {
             return {
                 throttleDelay: THROTTLE_DELAY,
@@ -873,7 +873,7 @@
         }
     });
 
-    var exports = {};
+    const exports = {};
     exports.Blinker = Blinker;
     exports.OnTrackLoadButton = OnTrackLoadButton;
     exports.KeyButton = KeyButton;
@@ -884,6 +884,6 @@
     exports.CrossfaderReverseTapButton = CrossfaderReverseTapButton;
     exports.CrossfaderAssignLED = CrossfaderAssignLED;
     exports.SamplerBank = SamplerBank;
-    global.behringer = _.assign(global.behringer, {ddm4000: exports});
+    global.behringer = Object.assign(global.behringer || {}, {ddm4000: exports});
     global.DDM4000 = DDM4000;
 })(this);
