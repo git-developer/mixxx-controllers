@@ -480,7 +480,6 @@
 
         const ModeButton = function(options) {
             options = options || {};
-            options.key = options.key || "mode";
             options.longPressTimeout = options.longPressTimeout || DEFAULT_LONGPRESS_DURATION;
             e.LongPressButton.call(this, options);
         };
@@ -599,8 +598,8 @@
                                 }
                             },
                             {type: c.Button, options: {midi: [note, 0x07],  inKey: null}}, // Mode
-                            {type: c.Button, options: {midi: [cc,   0x42], outKey: null}}, // Mode: Multi
-                            {type: c.Button, options: {midi: [cc,   0x41], outKey: null}}, // Mode: Single
+                            {type: c.Button, options: {midi: [cc,   0x42], outKey: undefined}}, // Mode: Multi
+                            {type: c.Button, options: {midi: [cc,   0x41], outKey: undefined}}, // Mode: Single
                             {type: OnTrackLoadButton, options: {setValues: DEFAULT_DECK_STATE}},
                         ],
                         equalizerUnit: { //        P3 / Low,        P2 / Mid,        P1 / High
@@ -630,8 +629,8 @@
                                 }
                             },
                             {type: c.Button, options: {midi: [note, 0x0B],  inKey: null}}, // Mode
-                            {type: c.Button, options: {midi: [cc,   0x4C], outKey: null}}, // Mode: Multi
-                            {type: c.Button, options: {midi: [cc,   0x4B], outKey: null}}, // Mode: Single
+                            {type: c.Button, options: {midi: [cc,   0x4C], outKey: undefined}}, // Mode: Multi
+                            {type: c.Button, options: {midi: [cc,   0x4B], outKey: undefined}}, // Mode: Single
                             {type: OnTrackLoadButton, options: {setValues: DEFAULT_DECK_STATE}},
                         ],
                         equalizerUnit: { //        P3 / Low,        P2 / Mid,        P1 / High
@@ -765,11 +764,11 @@
                             {options: {midi: [note, 0x2A],    key: null, sendShifted: true}}, // Crossfader: Bounce to MIDI Clock
                             {options: {midi: [note, 0x2B],  inKey: null}}, // Crossfader: Beat (Left)
                             {options: {midi: [note, 0x2C],  inKey: null}}, // Crossfader: Beat (Right)
-                            {options: {midi: [cc,   0x2B], outKey: null}}, // Crossfader: Beat 1
-                            {options: {midi: [cc,   0x2C], outKey: null}}, // Crossfader: Beat 2
-                            {options: {midi: [cc,   0x2D], outKey: null}}, // Crossfader: Beat 4
-                            {options: {midi: [cc,   0x2E], outKey: null}}, // Crossfader: Beat 8
-                            {options: {midi: [cc,   0x2F], outKey: null}}, // Crossfader: Beat 16
+                            {options: {midi: [cc,   0x2B], outKey: undefined}}, // Crossfader: Beat 1
+                            {options: {midi: [cc,   0x2C], outKey: undefined}}, // Crossfader: Beat 2
+                            {options: {midi: [cc,   0x2D], outKey: undefined}}, // Crossfader: Beat 4
+                            {options: {midi: [cc,   0x2E], outKey: undefined}}, // Crossfader: Beat 8
+                            {options: {midi: [cc,   0x2F], outKey: undefined}}, // Crossfader: Beat 16
                         ]
                     },
                     { // Sampler: Echo Time Buttons
