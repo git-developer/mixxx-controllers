@@ -281,6 +281,8 @@
                 if (triplet) {
                     delay /= 3.0;
                 }
+            } else {
+                delay = Math.max(delay, minDelay);
             }
             return delay;
         },
