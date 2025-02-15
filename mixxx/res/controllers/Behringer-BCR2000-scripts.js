@@ -58,6 +58,7 @@ var BCR2000 = new behringer.extension.GenericMidiController({
             }],
             effectUnits: [{
                 feedback: true,
+                feedbackOnRelease: true,
                 unitNumbers: [1],
                 midi: {
                     effectFocusButton: [cc, p.buttonRow1[0]],
@@ -76,6 +77,7 @@ var BCR2000 = new behringer.extension.GenericMidiController({
             },
             {
                 feedback: true,
+                feedbackOnRelease: true,
                 unitNumbers: [2],
                 midi: {
                     effectFocusButton: [cc, p.buttonRow1[7]],
